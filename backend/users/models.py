@@ -1,0 +1,32 @@
+from django.contrib.auth.models import AbstractUser
+from django.core.validators import RegexValidator
+from django.db import models
+
+from .constants import MAX_LENGTH
+
+
+class User(AbstractUser):
+    email = models.EmailField(unique=True, verbose_name='Email')
+    username = models.CharField(
+        max_length=MAX_LENGTH, unique=True,
+        validators=[RegexValidator(
+            r'^[\w.@+-]+\Z',
+            'Имя пользователя должно соответствовать шаблону',
+        )],
+        verbose_name='Имя пользователя'
+    )
+    first_name = models.CharField(max_length=MAX_LENGTH,
+                                  verbose_name='Имя')
+    last_name = models.CharField(max_length=MAX_LENGTH,
+                                 verbose_name='Фамилия')
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username', 'first_name', 'last_name']
+
+    class Meta:
+        ordering = ['id']
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
+
+    def __str__(self):
+        return self.email
