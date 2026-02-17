@@ -2,6 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 
 from .views import UserViewSet
+from .mock_views import MockProjectView, MockProjectDetailView
 
 router_v1 = DefaultRouter()
 router_v1.register('users', UserViewSet, basename='users')
@@ -9,4 +10,8 @@ router_v1.register('users', UserViewSet, basename='users')
 urlpatterns = [
     path('', include(router_v1.urls)),
     path('auth/', include('djoser.urls.authtoken')),
+    path('mock/projects/', MockProjectView.as_view(),
+         name='mock-projects'),
+    path('mock/projects/<int:pk>/', MockProjectDetailView.as_view(),
+         name='mock-project-detail'),
 ]
