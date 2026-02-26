@@ -1,4 +1,4 @@
-# Test Task API
+# AuthAPI
 
 Бэкенд-приложение на Django + Django REST Framework с реализацией системы аутентификации.
 
